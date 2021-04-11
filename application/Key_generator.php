@@ -48,7 +48,7 @@ class License_Generator {
 		else{ /* FOR NEW USER ACCOUNT */
 		
 			array_push($content, $new_record);
-			file_put_contents("DB.json",json_encode($content)); /* STORE THE INFORMATION IN JSON FILE INSTEAD OF DATABASE FOR DEMO PURPOSE*/
+			file_put_contents("DB/DB.json",json_encode($content)); /* STORE THE INFORMATION IN JSON FILE INSTEAD OF DATABASE FOR DEMO PURPOSE*/
 			return $License; /* RETURNS A 25 DIGIT ALPHANUMERIC KEY */
 		}
 	}

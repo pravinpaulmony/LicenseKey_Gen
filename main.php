@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { /* VALIDATE FORM SUBMISSION IS POST 
 		$email_error = validate_email($email1); /* EMAIL FORMAT VALIDATION */
 		
 		if($email_error==""){  /* CHECKS IF EMAIL VALID */
-			include_once 'Key_generator.php';
+			include_once 'application/Key_generator.php';
 			$generator = new License_Generator();
 			$licenseKey = $generator->generate($email1,"generate"); /* GENERATES NEW LICESNE KEY FOR USER */
 			
@@ -43,8 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { /* VALIDATE FORM SUBMISSION IS POST 
 
 		if($key_error=="" && $email_error1==""){
 			
-			include_once 'Key_generator.php';
-			include_once 'Key_validator.php';
+			include_once 'application/Key_generator.php';
+			include_once 'application/Key_validator.php';
 			$validator = new License_Validator();
 			
 			if($validator->validate($email2, $userkey)) { /* VALIDATES LICESNE KEY BASED ON USER INPUT */
