@@ -22,7 +22,7 @@ class License_Generator {
 			return $License; 
 		} 
 		
-		$string = file_get_contents("DB.json"); /* GETTING OLD RECORDS FROM JSON FILE */
+		$string = file_get_contents("DB/DB.json"); /* GETTING OLD RECORDS FROM JSON FILE */
 		$content = json_decode($string,true);
 		
 		/* INFORMATION STORED FOR A NEW USER */

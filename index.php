@@ -21,7 +21,7 @@
 </nav>
 
 <!--INCLUDED MAIN.PHP FILE FOR FORM SUBMISSION VALIDATIONS-->
-<?php include 'main.php'; ?>
+<?php include 'application/main.php'; ?>
 
 <div class="container-fluid">
   <div class="row">
