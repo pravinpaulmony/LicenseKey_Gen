@@ -14,7 +14,7 @@
 		background-color: #d0dadf!important;
 	}
 </style>
-<body class="text-light">
+<body class="text-dark">
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	<a class="navbar-brand font-weight-bold text-light" href="#">LICENSE-VALGEN</a>
@@ -39,16 +39,20 @@
 				<div class="form-group">
 				  <label class="font-weight-bold">Enter Your Email ID <span class="text-danger">*</span></label>
 				  <label class="badge badge-danger"><?php echo $email_error; ?></label><!--EMAIL FORMAT VALIDATION ERROR NOTIFICATIONS -->
-				  <input type="email" class="form-control" name="new_email" autocomplete="off" required >
+				  <input type="email" class="form-control" name="new_email" autocomplete="off" required value="<?php echo $email1; ?>">
 				</div>
+				<?php echo $expire_error; echo $exists_error; ?>
 			  </div>
 			  <div class="card-footer">
 				<button type="submit" class="btn btn-success btn-block font-weight-bold">GENERATE KEY</button>
 			  </div>
 		  </form>
 
-		  <!-- DISPLAY LICENSE KEY WHEN GENERATED -->
-		  <?php $display = ($licenseKey!="" && $email_error=="") ? "input-group p-2 font-weight-bold" : "input-group p-2 font-weight-bold d-none"; ?>
+		
+		<?php 
+			 /* DISPLAY LICENSE KEY WHEN GENERATED  */
+			$display = ($licenseKey!="" && strpos($licenseKey, 'expired') === false && strpos($licenseKey, 'exists') === false && $email_error=="") ? "input-group p-2 font-weight-bold" : "input-group p-2 font-weight-bold d-none"; 
+		?>
 			
 		  <label class="<?php echo $display; ?>">YOUR LICENSE KEY</label>
 		  <div class="<?php echo $display; ?>">
@@ -57,6 +61,7 @@
 			  <button class="btn btn-xs btn-info" onclick="copycode()">copy</button>
 			</div>
 		  </div>
+		  
 		</div>
 	  </div>
 	  

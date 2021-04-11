@@ -9,6 +9,9 @@ $licenseKey = "";
 $userkey = "";
 $key_error = "";
 $license_valid = "";
+$expire_error  = "";
+$exists_error  = "";
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { /* VALIDATE FORM SUBMISSION IS POST */
 	
@@ -20,7 +23,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { /* VALIDATE FORM SUBMISSION IS POST 
 		if($email_error==""){  /* CHECKS IF EMAIL VALID */
 			include_once 'Key_generator.php';
 			$generator = new License_Generator();
-			$licenseKey = $generator->generate($email1); /* GENERATES NEW LICESNE KEY FOR USER */
+			$licenseKey = $generator->generate($email1,"generate"); /* GENERATES NEW LICESNE KEY FOR USER */
+			
+			if(strpos($licenseKey, 'expired') === 0){
+
+				$expire_error = "<button type='button' class='btn btn-danger bt-xs btn-block'>License Key Already Expired On <span class='badge badge-light'>".explode(" ",$licenseKey)[1]."</span> <br><br> Please Renew Your License Key !</button>"; /* KEY EXPIRED ERROR */
+			}
+			else if(strpos($licenseKey, 'exists') === 0){
+				$exists_error = "<button type='button' class='btn btn-info bt-xs btn-block'>License Key Already Exists for this email account</button>"; /* KEY EXISTS ERROR */
+			}
 		}
 	}
 	else if ($_POST["type"] == "validate") { /* LICENSE KEY VALIDATION FORM */
@@ -75,4 +86,5 @@ function key_format($key) {
 		return "License Key is not Valid";
 	}
 }
+
 ?>
