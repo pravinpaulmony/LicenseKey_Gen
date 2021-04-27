@@ -14,17 +14,17 @@ $exists_error  = "";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { /* VALIDATE FORM SUBMISSION IS POST */
-	
+
 	if ($_POST["type"] == "generate") { /* NEW LICENSE KEY GENERATION FORM */
 
 		$email1 = clean_input($_POST["new_email"]); /* REMOVE SPECIAL CHARACTERS AND EMPTY SPACES */
 		$email_error = validate_email($email1); /* EMAIL FORMAT VALIDATION */
-		
+
 		if($email_error==""){  /* CHECKS IF EMAIL VALID */
 			include_once 'application/Key_generator.php';
 			$generator = new License_Generator();
 			$licenseKey = $generator->generate($email1,"generate"); /* GENERATES NEW LICESNE KEY FOR USER */
-			
+
 			if(strpos($licenseKey, 'expired') === 0){
 
 				$expire_error = "<button type='button' class='btn btn-danger bt-xs btn-block'>License Key Already Expired On <span class='badge badge-light'>".explode(" ",$licenseKey)[1]."</span> <br><br> Please Renew Your License Key !</button>"; /* KEY EXPIRED ERROR */
@@ -42,11 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { /* VALIDATE FORM SUBMISSION IS POST 
 		$email_error1 = validate_email($email2); /* EMAIL FORMAT VALIDATION */
 
 		if($key_error=="" && $email_error1==""){
-			
+
 			include_once 'application/Key_generator.php';
 			include_once 'application/Key_validator.php';
 			$validator = new License_Validator();
-			
+
 			if($validator->validate($email2, $userkey)) { /* VALIDATES LICESNE KEY BASED ON USER INPUT */
 				$license_valid = "<label class='badge badge-success'>License Key is Valid</label>";  /* SUCCESS */
 			} else {
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { /* VALIDATE FORM SUBMISSION IS POST 
 			}
 		}
 	}
-	
+
 }
 
 /* FUNCTION TO REMOVE SPECIAL CHARACTERS AND SPACES */
@@ -67,11 +67,11 @@ function clean_input($data) {
 
 /* FUNCTION FOR EMAIL FORMAT VALIDATION */
 function validate_email($email) {
-	
+
   if (empty($email)) {
 		return "Email is required";
 	 } else {
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		if (!preg_match('/[a-z0-9_\-\+\.]+@[a-z0-9\-]+\.[a-z]{2,6}/i', $email)) {
 		  return "Invalid Email Format";
 		}
 	}
